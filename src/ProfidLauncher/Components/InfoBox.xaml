@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="ProfidLauncher.Components.InfoBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:trresx="clr-namespace:ProfidLauncher.Translations"
+             xmlns:loc="clr-namespace:ProfidLauncher.Services"
+             loc:Translation.ResourceManager="{x:Static trresx:ProfidLauncherTexts.ResourceManager}"
+             xmlns:local="clr-namespace:ProfidLauncher.Components"
+             mc:Ignorable="d" >
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding ProductName}" FontWeight="Bold" FontSize="30"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{loc:Loc IB_VERSION}" FontWeight="Bold"/>
+            <Label Content="{Binding Version}" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Copy}" FontWeight="Bold" />
+            <Label Content="{Binding Company}" FontWeight="Bold" />
+            <!--<Label>
+                <Label.Content>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding Path="Copy" />
+                        <Binding Path="Company" />
+                    </MultiBinding>
+                </Label.Content>
+            </Label>-->
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{loc:Loc IB_AUTHOR}" FontWeight="Bold"/>
+            <Label Content="{Binding Author}" FontWeight="Bold"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
