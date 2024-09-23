@@ -41,7 +41,8 @@ jobs:
   build:
     runs-on: windows-latest
     needs: tests
-    if: github.ref == 'refs/head/main' || github.ref == 'refs/head/gaction'
+    if: |
+        github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gaction'
 
     steps:
       - uses: actions/checkout@v4
