@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfidLauncher", "src\Profi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfidLauncher.Tests", "src\ProfidLauncher.Tests\ProfidLauncher.Tests.csproj", "{8EFC04F4-E11B-4AAF-B68E-EC1F97DDBC2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build", "build\Build.csproj", "{9BB83503-93EC-41A7-A102-F32ED2F7F3D2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
