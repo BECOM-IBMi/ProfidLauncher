@@ -1,0 +1,39 @@
+name: publish
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+    - 'main'
+    - 'gaction'
+  pull_request:
+    branches:
+    - '*'
+  release:
+    types:
+    - published
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  ArtifactsDirectory: ${{github.workspace}}/artifacts
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: 8.x
+
+        - name: Restore
+          run: dotnet restore -r win-x64 -p:PublishReadyToRun=true
+        
+        - name: Build
+          run: dotnet build --configuration Release --no-restore
+        
+        - name: Test
+          run: dotnet test --configuration Release --no-restore
