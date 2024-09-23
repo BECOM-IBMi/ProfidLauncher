@@ -37,3 +37,50 @@ jobs:
         
         - name: Test
           run: dotnet test --configuration Release --no-restore
+    
+  build:
+    runs-on: windows-latest
+    needs: tests
+    if: github.ref == 'refs/head/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: 8.x
+
+      - name: GitVersion Setup
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+            versionSpec: '5.x'
+        
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v1.1.1
+        id: version
+        with:
+            useConfigFile: true
+            configFilePath: GitVersion.yml
+        
+      - name: usev
+        id: usev1
+        run: |
+            echo ${{ env.semVer }}
+            echo "sem-ver=${{ env.semVer }}" >> $GITHUB_OUTPUT
+        
+      - name: Restore
+        run: dotnet restore -r win-x64 -p:PublishReadyToRun=true
+        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        
+      - name: Publish
+        run: dotnet publish -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true --self-contained false -p:PublishSingleFile=true -p:Version=${{ env.semVer }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+            name: App
+            if-no-files-found: error
+            retention-days: 2
+            path: ${{ env.ArtifactsDirectory }}/*.exe
