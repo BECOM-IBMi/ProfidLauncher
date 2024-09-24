@@ -86,8 +86,8 @@ jobs:
       - name: Publish
         run: dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:Version=${{ env.semVer }} -p:UseAppHost=true
       
-      - name: Create artifacts dir
-        run: mkdir ./artifacts
+      - name: Create outputs dir
+        run: mkdir ${{ env.OutputDirectory}}
 
       - name: Create archive
         run: Compress-Archive ${{ env.ArtifactsDirectory }} ${{ env.OutputDirectory}}/${{ env.semVer }}.zip
