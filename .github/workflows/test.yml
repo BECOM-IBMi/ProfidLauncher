@@ -34,4 +34,4 @@ jobs:
       - name: usev
         id: usev1
         run: |
-            Write-Output ${{ env.semVer }}
+            echo ${{ env.semVer }}
