@@ -46,7 +46,7 @@ jobs:
         shell: pwsh
 
     if: |
-        github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gaction'
+        github.ref == 'refs/heads/main'
     
     outputs:
       sem-ver: ${{ steps.usev1.outputs.sem-ver }}
