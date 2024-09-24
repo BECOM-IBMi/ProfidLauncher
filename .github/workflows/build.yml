@@ -76,8 +76,8 @@ jobs:
       - name: usev
         id: usev1
         run: |
-            echo ${{ env.semVer }}
-            echo "sem-ver=${{ env.semVer }}" >> $GITHUB_OUTPUT
+            Write-Output ${{ env.semVer }}
+            Write-Output "sem-ver=${{ env.semVer }}" >> $GITHUB_OUTPUT
         
       - name: Restore
         run: dotnet restore -r win-x64 -p:PublishReadyToRun=true
@@ -105,11 +105,18 @@ jobs:
         with:
           name: Zipped
           path: ${{ env.ArtifactsDirectory }}
-
-      - name: Show Ver
-        run: |
-          echo "${{ needs.build.outputs.sem-ver }}"
-          echo "relname=ProvidLauncher ${{ needs.build.outputs.sem-ver }}" >> $GITHUB_ENV
+      
+      - name: GitVersion Setup
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: '5.x'
+          
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v1.1.1
+        id: version
+        with:
+          useConfigFile: true
+          configFilePath: GitVersion.yml
 
       - name: Setup Zip
         run: sudo apt install -y zip
@@ -117,14 +124,14 @@ jobs:
       - name: Zip
         run: |
           cd ${{ env.ArtifactsDirectory }}
-          zip -r ../${{ needs.build.outputs.sem-ver }}.zip ./*
+          zip -r ../${{ env.semVer }}.zip ./*
           cd ..
           ls
       
       - name: Releae
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.build.outputs.sem-ver }}
+          tag_name: ${{ env.semVer }}
           name: ProfidLauncher
-          files: ${{ needs.build.outputs.sem-ver }}.zip
+          files: ${{ env.semVer }}.zip
           token: ${{ secrets.RELEASE_KEY }}
