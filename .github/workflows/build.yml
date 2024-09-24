@@ -138,6 +138,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.semVer }}
-          name: ProfidLauncher
+          name: ProfidLauncher v${{ env.semVer }}
           files: ${{ env.semVer }}.zip
           token: ${{ secrets.RELEASE_KEY }}
