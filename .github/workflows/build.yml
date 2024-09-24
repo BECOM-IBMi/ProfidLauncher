@@ -47,6 +47,9 @@ jobs:
 
     if: |
         github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gaction'
+    
+    outputs:
+      sem-ver: ${{ steps.usev1.outputs.sem-ver }}
 
     steps:
       - uses: actions/checkout@v4
