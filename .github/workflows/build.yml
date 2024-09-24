@@ -86,15 +86,15 @@ jobs:
       - name: Publish
         run: dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:Version=${{ env.semVer }} -p:UseAppHost=true
       
-      - name: Create outputs dir
-        run: mkdir ${{ env.OutputDirectory}}
+      # - name: Create outputs dir
+      #   run: mkdir ${{ env.OutputDirectory}}
 
-      - name: Create archive
-        run: Compress-Archive ${{ env.ArtifactsDirectory }} ${{ env.OutputDirectory}}/${{ env.semVer }}.zip
+      # - name: Create archive
+      #   run: Compress-Archive ${{ env.ArtifactsDirectory }} ${{ env.OutputDirectory}}/${{ env.semVer }}.zip
 
       - uses: actions/upload-artifact@v4
         with:
             name: Zipped
             if-no-files-found: error
             retention-days: 2
-            path: ${{ env.OutputDirectory}}/${{ env.semVer }}.zip
+            path: ${{ env.ArtifactsDirectory }}
