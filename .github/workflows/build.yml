@@ -16,6 +16,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   ArtifactsDirectory: ${{github.workspace}}/artifacts
+  OutputDirectory: ${{github.workspace}}/output
 
 jobs:
   tests:
@@ -41,6 +42,10 @@ jobs:
   build:
     runs-on: windows-latest
     needs: tests
+    defaults:
+      run:
+        shell: pwsh
+
     if: |
         github.ref == 'refs/heads/main' || github.ref == 'refs/heads/gaction'
 
@@ -79,11 +84,17 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:Version=${{ env.semVer }} -p:UseAppHost=true
+        run: dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:Version=${{ env.semVer }} -p:UseAppHost=true
+      
+      - name: Create artifacts dir
+        run: mkdir ./artifacts
 
-    #   - uses: actions/upload-artifact@v4
-    #     with:
-    #         name: App
-    #         if-no-files-found: error
-    #         retention-days: 2
-    #         path: ${{ env.ArtifactsDirectory }}/*.exe
+      - name: Create archive
+        run: Compress-Archive ${{ env.ArtifactsDirectory }} ${{ env.OutputDirectory}}/${{ env.semVer }}.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+            name: Zipped
+            if-no-files-found: error
+            retention-days: 2
+            path: ${{ env.OutputDirectory}}/${{ env.semVer }}.zip
