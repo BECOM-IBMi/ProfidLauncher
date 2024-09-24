@@ -1,0 +1,141 @@
+name: publish
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+    - 'main'
+    - 'gaction'
+  pull_request:
+    branches:
+    - '*'
+  release:
+    types:
+    - published
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  ArtifactsDirectory: ${{github.workspace}}/artifacts
+
+jobs:
+  tests:
+    runs-on: windows-latest
+
+    steps:
+        - uses: actions/checkout@v4
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: 8.x
+
+        - name: Restore
+          run: dotnet restore
+        
+        - name: Build
+          run: dotnet build --configuration Release --no-restore
+        
+        - name: Test
+          run: dotnet test --configuration Release --no-restore
+    
+  build:
+    runs-on: windows-latest
+    needs: tests
+    defaults:
+      run:
+        shell: pwsh
+
+    if: |
+        github.ref == 'refs/heads/main'
+    
+    outputs:
+      sem-ver: ${{ steps.usev1.outputs.sem-ver }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: 8.x
+
+      - name: GitVersion Setup
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+            versionSpec: '5.x'
+        
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v1.1.1
+        id: version
+        with:
+            useConfigFile: true
+            configFilePath: GitVersion.yml
+        
+      - name: usev
+        id: usev1
+        run: |
+            Write-Output ${{ env.semVer }}
+            Write-Output "sem-ver=${{ env.semVer }}" >> $GITHUB_OUTPUT
+        
+      - name: Restore
+        run: dotnet restore -r win-x64 -p:PublishReadyToRun=true
+        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        
+      - name: Publish
+        run: dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:Version=${{ env.semVer }} -p:UseAppHost=true
+
+      - uses: actions/upload-artifact@v4
+        with:
+            name: Zipped
+            if-no-files-found: error
+            retention-days: 2
+            path: ${{ env.ArtifactsDirectory }}
+    
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        name: Download
+        with:
+          name: Zipped
+          path: ${{ env.ArtifactsDirectory }}
+      
+      - name: GitVersion Setup
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: '5.x'
+          
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v1.1.1
+        id: version
+        with:
+          useConfigFile: true
+          configFilePath: GitVersion.yml
+
+      - name: Setup Zip
+        run: sudo apt install -y zip
+      
+      - name: Zip
+        run: |
+          cd ${{ env.ArtifactsDirectory }}
+          zip -r ../${{ env.semVer }}.zip ./*
+          cd ..
+          ls
+      
+      - name: Releae
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.semVer }}
+          name: ProfidLauncher
+          files: ${{ env.semVer }}.zip
+          token: ${{ secrets.RELEASE_KEY }}
