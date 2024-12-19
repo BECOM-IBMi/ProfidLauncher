@@ -141,3 +141,46 @@ jobs:
           name: ProfidLauncher v${{ env.semVer }}
           files: ${{ env.semVer }}.zip
           token: ${{ secrets.RELEASE_KEY }}
+
+  release_installer:
+    runs-on: windows-latest
+    needs: build
+
+    defaults:
+      run:
+        shell: pwsh
+  
+    if: |
+      github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - uses: actions/download-artifact@v4
+      name: Download
+      with:
+        name: updater
+        path: ${{ env.ArtifactsDirectory }}
+
+    - name: GitVersion Setup
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: '5.x'
+          
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v1.1.1
+      id: version
+      with:
+        useConfigFile: true
+        configFilePath: GitVersion.yml
+      
+    - name: Install Advanced Installer
+      uses: caphyon/advinst-github-action@main
+      with:
+        advinst-enable-automation: 'true'
+  
+    - name: Build MSI
+      run: |
+        .\update_aip.gha.ps1 ${{ env.semVer }}
