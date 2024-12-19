@@ -15,6 +15,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   ArtifactsDirectory: ${{github.workspace}}/artifacts
+  InstallerDirectory: ${{github.workspace}}\installer\ProfidLauncherSetup.msi
 
 jobs:
   tests:
@@ -184,3 +185,11 @@ jobs:
     - name: Build MSI
       run: |
         .\update_aip.gha.ps1 ${{ env.semVer }}
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.semVer }}
+        name: ProfidLauncher v${{ env.semVer }}
+        files: ${{ env.InstallerDirectory }}
+        token: ${{ secrets.RELEASE_KEY }}
