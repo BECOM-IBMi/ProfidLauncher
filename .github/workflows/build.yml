@@ -160,9 +160,9 @@ jobs:
         fetch-depth: 0
 
     - uses: actions/download-artifact@v4
-      name: Zipped
+      name: Download
       with:
-        name: updater
+        name: Zipped
         path: ${{ env.ArtifactsDirectory }}
 
     - name: GitVersion Setup
