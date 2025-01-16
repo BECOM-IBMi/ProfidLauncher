@@ -73,6 +73,8 @@
     <ROW File="WebView2Loader.dll" Component_="WebView2Loader.dll" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\artifacts\WebView2Loader.dll" SelfReg="false"/>
     <ROW File="wpfgfx_cor3.dll" Component_="wpfgfx_cor3.dll" FileName="WPFGFX~1.DLL|wpfgfx_cor3.dll" Attributes="0" SourcePath="..\artifacts\wpfgfx_cor3.dll" SelfReg="false"/>
     <ROW File="WebView2Loader.dll_1" Component_="WebView2Loader.dll_1" FileName="WEBVIE~1.DLL|WebView2Loader.dll" Attributes="0" SourcePath="..\artifacts\runtimes\win-x64\native\WebView2Loader.dll" SelfReg="false"/>
+    <ROW File="Shortcut.ps1" Component_="favicon.ico" FileName="Shortcut.ps1" Attributes="0" SourcePath="..\artifacts\Assets\Shortcut.ps1" SelfReg="false"/>
+    <ROW File="profid_logo_small.png" Component_="favicon.ico" FileName="PROFID~1.PNG|profid_logo_small.png" Attributes="0" SourcePath="..\artifacts\Assets\profid_logo_small.png" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
