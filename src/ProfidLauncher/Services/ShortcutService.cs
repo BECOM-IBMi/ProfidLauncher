@@ -55,10 +55,12 @@ public class ShortcutService
             throw new ArgumentException("Basedirectory is null");
         }
 
-        //Nur wenn der Updater mich aufruft:
-        //var updateDirInfo = baseDirInfo.Parent;
-
         var updateDirInfo = baseDirInfo;
+        //Nur wenn der Updater mich aufruft:
+        if (_appConfig.FromSelfUpdater)
+        {
+            updateDirInfo = baseDirInfo.Parent;
+        }
         if (updateDirInfo is null || !updateDirInfo.Exists)
         {
             throw new ArgumentException("Updatedirectory is null");
@@ -69,18 +71,30 @@ public class ShortcutService
 
         var script = Path.Combine(assetsDir, "Shortcut.ps1");
 
-        //Nur wenn der Updater mich aufruft:
-        //var app = $"ProfidLauncherUpdater.exe";
         var app = $"ProfidLauncher.exe";
+        //Nur wenn der Updater mich aufruft:
+        if (_appConfig.FromSelfUpdater)
+        {
+            app = $"ProfidLauncherUpdater.exe";
+        }
         var appPath = Path.Combine(updateDirInfo.FullName, app);
 
-        //Nur wenn der Updater mich aufruft:
-        //var arg = $"run {operationMode}";
         var arg = $"-m {operationMode}";
+        //Nur wenn der Updater mich aufruft:
+        if (_appConfig.FromSelfUpdater)
+        {
+            arg = $"run {operationMode}";
+        }
 
         var iconAssetPath = Path.Combine(updateDirInfo.FullName, "Assets");
-        //var iconPath = Path.Combine(iconAssetPath, mode.IconName);
+
         var iconPath = Path.Combine(assetsDir, mode.IconName);
+
+        //Nur wenn der Updater mich aufruft:
+        if (_appConfig.FromSelfUpdater)
+        {
+            iconPath = Path.Combine(iconAssetPath, mode.IconName);
+        }
 
         var lnkName = $"{mode.ProgramShortcutName}.lnk";
 

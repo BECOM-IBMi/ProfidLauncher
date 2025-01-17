@@ -24,4 +24,6 @@ public class ProfidAppConfiguration
     public bool UseHTTPS { get; set; }
 
     public Sites Site { get; set; }
+
+    public bool FromSelfUpdater { get; set; }
 }

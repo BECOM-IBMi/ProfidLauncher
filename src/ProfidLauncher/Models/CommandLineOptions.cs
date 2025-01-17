@@ -12,5 +12,8 @@ namespace ProfidLauncher.Models
 
         [Option('s', "secure", Required = false, HelpText = "Use https")]
         public bool UseSecure { get; set; }
+
+        [Option('u', "updater", Required = false, HelpText = "Run from self updater")]
+        public bool FromUpdater { get; set; }
     }
 }

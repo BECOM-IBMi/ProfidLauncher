@@ -42,6 +42,7 @@ public static class ProfidAppExtensions
             appConfig.WorkstationId = workstationInfo.workstationId;
             appConfig.Site = workstationInfo.site;
             appConfig.UseHTTPS = opts.UseSecure;
+            appConfig.FromSelfUpdater = opts.FromUpdater;
 
             return appConfig;
         }
