@@ -73,7 +73,10 @@ public class ShortcutService
         //var app = $"ProfidLauncherUpdater.exe";
         var app = $"ProfidLauncher.exe";
         var appPath = Path.Combine(updateDirInfo.FullName, app);
-        var arg = $"run {operationMode}";
+
+        //Nur wenn der Updater mich aufruft:
+        //var arg = $"run {operationMode}";
+        var arg = $"-m {operationMode}";
 
         var iconAssetPath = Path.Combine(updateDirInfo.FullName, "Assets");
         //var iconPath = Path.Combine(iconAssetPath, mode.IconName);

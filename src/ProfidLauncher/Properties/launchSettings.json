@@ -2,7 +2,7 @@
   "profiles": {
     "ProfidLauncher": {
       "commandName": "Project",
-      "commandLineArgs": "-m ATRIUMD -u \"C:\\Users\\mprattinge\\AppData\\Roaming\\BECOM Electronics GmbH\\PROFID Launcher\\\""
+      "commandLineArgs": "-m ATRIUMCN"
     }
   }
 }
