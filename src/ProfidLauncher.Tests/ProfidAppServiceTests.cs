@@ -25,15 +25,15 @@ public class ProfidAppServiceTests
     }
 
     [Theory]
-    [InlineData("ATRIUMP", 0, false, "001-itsv-mprat2", "http://as400.becom.at:8082/profoundui/atrium?workstnid=mprat2&suffixid=1")]
-    [InlineData("GENIEP", 0, false, "001-itsv-mprat2", "http://as400.becom.at:8082/profoundui/genie?skin=BECOM&workstnid=mprat2&suffixid=1")]
-    [InlineData("ATRIUMD", 0, false, "001-itsv-mprat2", "http://as400test.becom.at:8082/profoundui/atrium?workstnid=mprat2&suffixid=1")]
-    [InlineData("GENIED", 0, false, "001-itsv-mprat2", "http://as400test.becom.at:8082/profoundui/genie?skin=BECOM&workstnid=mprat2&suffixid=1")]
-    [InlineData("ATRIUMP", 0, false, "002-VENB-AMAZA1", "http://as400.becom.at:8082/profoundui/atrium?workstnid=amaza1&suffixid=1")]
-    [InlineData("ATRIUMP", 0, false, "HITJKATO1", "http://as400.becom.at:8082/profoundui/atrium?workstnid=jkato1&suffixid=1")]
+    [InlineData("ATRIUMP", 0, false, "001-itsv-mprat2", "http://as400:8082/profoundui/atrium?workstnid=mprat2&suffixid=1")]
+    [InlineData("GENIEP", 0, false, "001-itsv-mprat2", "http://as400:8082/profoundui/genie?skin=BECOM&workstnid=mprat2&suffixid=1")]
+    [InlineData("ATRIUMD", 0, false, "001-itsv-mprat2", "http://as400test:8082/profoundui/atrium?workstnid=mprat2&suffixid=1")]
+    [InlineData("GENIED", 0, false, "001-itsv-mprat2", "http://as400test:8082/profoundui/genie?skin=BECOM&workstnid=mprat2&suffixid=1")]
+    [InlineData("ATRIUMP", 0, false, "002-VENB-AMAZA1", "http://as400:8082/profoundui/atrium?workstnid=amaza1&suffixid=1")]
+    [InlineData("ATRIUMP", 0, false, "HITJKATO1", "http://as400:8082/profoundui/atrium?workstnid=jkato1&suffixid=1")]
     [InlineData("ATRIUMCN", 0, false, "032-GRPC-STAFF1", "http://032-itsv-as400.becom.at:8082/profoundui/atrium?workstnid=staff1&suffixid=1")]
-    [InlineData("ATRIUMP", 8085, true, "001-itsv-mprat2", "https://as400.becom.at:8085/profoundui/auth/atrium?workstnid=mprat2&suffixid=1")]
-    [InlineData("ATRIUMP", 1234, false, "001-itsv-mprat2", "http://as400.becom.at:1234/profoundui/atrium?workstnid=mprat2&suffixid=1")]
+    [InlineData("ATRIUMP", 8085, true, "001-itsv-mprat2", "https://as400:8085/profoundui/auth/atrium?workstnid=mprat2&suffixid=1")]
+    [InlineData("ATRIUMP", 1234, false, "001-itsv-mprat2", "http://as400:1234/profoundui/atrium?workstnid=mprat2&suffixid=1")]
     public void Test_GetUrl_OK(string operationMode, int port, bool useSecure, string hostName, string resultUrl)
     {
         var config = ProfidAppExtensions.GetProfidAppConfiguration(new CommandLineOptions { OperationMode = operationMode, Port = port, UseSecure = useSecure }, hostName);

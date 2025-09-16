@@ -40,6 +40,8 @@ public class ProfidAppService
             throw new Exception(msg);
         }
 
+        appMode.UseHttps = profidConfig.UseHTTPS;
+
         _appMode = appMode;
     }
 
