@@ -78,10 +78,10 @@ public class ProfidAppService
         switch (_appMode.System)
         {
             case Models.System.PROD:
-                host = _settings.Prod;
+                host = _profidConfig.Site == Sites.HEYUAN ? _settings.China : _settings.Prod;
                 break;
             case Models.System.DEV:
-                host = _settings.Test;
+                host = _profidConfig.Site == Sites.HEYUAN ? _settings.China : _settings.Test;
                 break;
             case Models.System.CHINA:
                 host = _settings.China;
