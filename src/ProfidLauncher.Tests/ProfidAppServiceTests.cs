@@ -34,6 +34,7 @@ public class ProfidAppServiceTests
     [InlineData("ATRIUMCN", 0, false, "032-GRPC-STAFF1", "http://032-itsv-as400.becom.at:8082/profoundui/atrium?workstnid=staff1&suffixid=1")]
     [InlineData("ATRIUMP", 8085, true, "001-itsv-mprat2", "https://as400:8085/profoundui/auth/atrium?workstnid=mprat2&suffixid=1")]
     [InlineData("ATRIUMP", 1234, false, "001-itsv-mprat2", "http://as400:1234/profoundui/atrium?workstnid=mprat2&suffixid=1")]
+    [InlineData("ATRIUMP", 0, false, "032-ADNB-RES1", "http://032-itsv-as400.becom.at:8082/profoundui/atrium?workstnid=mprat2&suffixid=1")]
     public void Test_GetUrl_OK(string operationMode, int port, bool useSecure, string hostName, string resultUrl)
     {
         var config = ProfidAppExtensions.GetProfidAppConfiguration(new CommandLineOptions { OperationMode = operationMode, Port = port, UseSecure = useSecure }, hostName);

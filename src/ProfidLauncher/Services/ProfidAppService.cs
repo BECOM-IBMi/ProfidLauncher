@@ -52,33 +52,49 @@ public class ProfidAppService
 
     public string GetCurrentUrl()
     {
-
-
         _logger.LogDebug($"Preparing url...");
         //Url aufbereiten
         var url = _appMode.BaseUrl;
 
+        var host = "";
         var port = 0;
         var protocol = "";
         var useAuth = "";
+
         if (_profidConfig.Port != 0)
         {
             //Teile der Url aus den args Überschreiben
             _logger.LogInformation($"Port overwritten via commandline argument: {_profidConfig.Port}");
 
             port = _profidConfig.Port;
-            protocol = _profidConfig.UseHTTPS ? "https" : "http";
-            useAuth = _profidConfig.UseHTTPS ? "auth/" : "";
         }
         else
         {
             //Url aus customizing aufbereiten
             port = _appMode.UseHttps ? _settings.HttpsPort : _settings.HttpPort;
-            protocol = _appMode.UseHttps ? "https" : "http";
-            useAuth = _appMode.UseHttps ? "auth/" : "";
         }
 
-        url = string.Format(url, protocol, port, useAuth, _profidConfig.WorkstationId.ToLower());
+        //Get the host
+        switch (_appMode.System)
+        {
+            case Models.System.PROD:
+                host = _settings.Prod;
+                break;
+            case Models.System.DEV:
+                host = _settings.Test;
+                break;
+            case Models.System.CHINA:
+                host = _settings.China;
+                break;
+            default:
+                host = _settings.Prod;
+                break;
+        }
+
+        protocol = _profidConfig.UseHTTPS ? "https" : "http";
+        useAuth = _profidConfig.UseHTTPS ? "auth/" : "";
+
+        url = string.Format(url, protocol, host, port, useAuth, _profidConfig.WorkstationId.ToLower());
 
         return url;
     }
