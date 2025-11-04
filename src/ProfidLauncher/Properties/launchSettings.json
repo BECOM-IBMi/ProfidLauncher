@@ -2,7 +2,7 @@
   "profiles": {
     "ProfidLauncher": {
       "commandName": "Project",
-      "commandLineArgs": "-m ATRIUMP"
+      "commandLineArgs": "-m ATRIUMD"
     }
   }
 }

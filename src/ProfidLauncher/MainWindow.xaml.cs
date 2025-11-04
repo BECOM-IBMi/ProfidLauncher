@@ -37,6 +37,9 @@ namespace ProfidLauncher
                 await webView.EnsureCoreWebView2Async(env);
 
                 webView.CoreWebView2.AddHostObjectToScript("plauncher", _profidLauncherCommuncator);
+
+                // This force disable the Ctrl+R refresh and F5 refresh
+                webView.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
             }
             catch (Exception ex)
             {
