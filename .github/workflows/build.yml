@@ -89,8 +89,22 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Publish
-        run: dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj -c Release --no-restore -r win-x64 --self-contained -o ${{ env.ArtifactsDirectory }} -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:Version=${{ env.semVer }} -p:UseAppHost=true
-
+        run: |
+          dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj \
+            -c Release \
+            --no-restore \
+            -r win-x64 \
+            --self-contained \
+            -o ${{ env.ArtifactsDirectory }} \
+            -p:PublishReadyToRun=true \
+            -p:PublishSingleFile=true \
+            -p:IncludeNativeLibrariesForSelfExtract=true \
+            -p:Version=${{ env.semVer }} \
+            -p:UseAppHost=true \
+            -p:FileVersion=${{ env.semVer }} \
+            -p:AssemblyVersion=${{ env.semVer }} \
+            -p:InformationalVersion=${{ env.semVer }}
+            
       - uses: actions/upload-artifact@v4
         with:
             name: Zipped
