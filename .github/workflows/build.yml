@@ -101,7 +101,11 @@ jobs:
             -p:FileVersion=${{ env.semVer }} `
             -p:AssemblyVersion=${{ env.semVer }} `
             -p:InformationalVersion=${{ env.semVer }}
-            
+      
+      - name: Copy Assets
+        run: |
+          cp ./src/ProfidLauncher/Assets/*.ico ${{ env.ArtifactsDirectory }}/Assets/
+      
       - uses: actions/upload-artifact@v4
         with:
             name: Zipped
