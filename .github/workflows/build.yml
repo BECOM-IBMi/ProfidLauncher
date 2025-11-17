@@ -90,11 +90,8 @@ jobs:
         
       - name: Publish
         run: |
-          dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj \
-            -c Release \
-            --no-restore \
+          dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj -self-contained --no-restore -c Release  \
             -r win-x64 \
-            --self-contained \
             -o ${{ env.ArtifactsDirectory }} \
             -p:PublishReadyToRun=true \
             -p:PublishSingleFile=true \
