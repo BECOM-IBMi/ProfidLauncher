@@ -90,16 +90,16 @@ jobs:
         
       - name: Publish
         run: |
-          dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj --self-contained --no-restore -c Release  \
-            -r win-x64 \
-            -o ${{ env.ArtifactsDirectory }} \
-            -p:PublishReadyToRun=true \
-            -p:PublishSingleFile=true \
-            -p:IncludeNativeLibrariesForSelfExtract=true \
-            -p:Version=${{ env.semVer }} \
-            -p:UseAppHost=true \
-            -p:FileVersion=${{ env.semVer }} \
-            -p:AssemblyVersion=${{ env.semVer }} \
+          dotnet publish ./src/ProfidLauncher/ProfidLauncher.csproj --self-contained --no-restore -c Release `
+            -r win-x64 `
+            -o ${{ env.ArtifactsDirectory }} `
+            -p:PublishReadyToRun=true `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:Version=${{ env.semVer }} `
+            -p:UseAppHost=true `
+            -p:FileVersion=${{ env.semVer }} `
+            -p:AssemblyVersion=${{ env.semVer }} `
             -p:InformationalVersion=${{ env.semVer }}
             
       - uses: actions/upload-artifact@v4
