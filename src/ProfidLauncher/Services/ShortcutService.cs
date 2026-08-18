@@ -72,29 +72,14 @@ public class ShortcutService
         var script = Path.Combine(assetsDir, "Shortcut.ps1");
 
         var app = $"ProfidLauncher.exe";
-        //Nur wenn der Updater mich aufruft:
-        if (_appConfig.FromSelfUpdater)
-        {
-            app = $"ProfidLauncherUpdater.exe";
-        }
+
         var appPath = Path.Combine(updateDirInfo.FullName, app);
 
         var arg = $"-m {operationMode}";
-        //Nur wenn der Updater mich aufruft:
-        if (_appConfig.FromSelfUpdater)
-        {
-            arg = $"run {operationMode}";
-        }
 
         var iconAssetPath = Path.Combine(updateDirInfo.FullName, "Assets");
 
         var iconPath = Path.Combine(assetsDir, mode.IconName);
-
-        //Nur wenn der Updater mich aufruft:
-        if (_appConfig.FromSelfUpdater)
-        {
-            iconPath = Path.Combine(iconAssetPath, mode.IconName);
-        }
 
         var lnkName = $"{mode.ProgramShortcutName}.lnk";
 
