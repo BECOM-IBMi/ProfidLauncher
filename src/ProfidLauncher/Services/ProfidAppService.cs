@@ -84,7 +84,7 @@ public class ProfidAppService
                 host = _profidConfig.Site == Sites.HEYUAN ? _settings.China : _settings.Test;
                 break;
             case Models.System.CHINA:
-                host = _settings.China;
+                host = _profidConfig.Site == Sites.HEYUAN ? _settings.Prod : _settings.China;
                 break;
             default:
                 host = _settings.Prod;
