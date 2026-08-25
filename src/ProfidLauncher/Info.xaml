@@ -14,11 +14,13 @@
         Height="320">
     <StackPanel Margin="10">
         <Image HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Source="/Assets/profid_logo_small.png" />
-        <comp:InfoBox ProductName="Profid Launcher" 
-                      Version="1.1.1" 
+        <comp:InfoBox x:Name="InfoBox"
+                      ProductName="Profid Launcher" 
+                      Version="" 
                       Copy="(c)2023" 
                       Company="Becom Electronics Gmbh" 
-                      Author="Michael Prattinger (michael.prattinger@becom-goup.com)"/>
+                      Author="Org. Dev &amp; IT (profid-support@becom-group.com)"
+                      AuthorMailAddress="profid-support@becom-group.com"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{loc:Loc CLOSE}" Margin="10 10 10 10" Width="120" x:Name="CloseBtn" Click="CloseBtn_Click"/>
         </StackPanel>

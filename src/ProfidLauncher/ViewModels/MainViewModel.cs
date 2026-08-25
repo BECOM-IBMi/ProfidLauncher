@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ProfidLauncher.Services;
 using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ProfidLauncher.ViewModels;
@@ -65,7 +66,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ShowInfo()
     {
-        var info = new Info();
+        var info = new Info(_profidService.Version)
+        {
+            Owner = Application.Current.MainWindow
+        };
+
         info.ShowDialog();
     }
 
