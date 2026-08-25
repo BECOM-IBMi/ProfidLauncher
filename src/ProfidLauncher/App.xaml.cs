@@ -16,6 +16,7 @@ namespace ProfidLauncher
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            MainWindow = mainWindow;
             mainWindow.Show();
             base.OnStartup(e);
         }

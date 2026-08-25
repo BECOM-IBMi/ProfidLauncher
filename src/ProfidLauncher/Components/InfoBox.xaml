@@ -30,7 +30,12 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{loc:Loc IB_AUTHOR}" FontWeight="Bold"/>
-            <Label Content="{Binding Author}" FontWeight="Bold"/>
+            <TextBlock VerticalAlignment="Center" Margin="4,0,0,0">
+                <Hyperlink NavigateUri="{Binding AuthorMailAddress, StringFormat=mailto:{0}}"
+                           RequestNavigate="AuthorLink_RequestNavigate">
+                    <Run Text="{Binding Author}"/>
+                </Hyperlink>
+            </TextBlock>
         </StackPanel>
     </StackPanel>
 </UserControl>
