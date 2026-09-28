@@ -47,6 +47,7 @@ public class Program
                 services.AddSingleton<App>();
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<Admin>();
+                services.AddSingleton<Info>();
 
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<AdminViewModel>();

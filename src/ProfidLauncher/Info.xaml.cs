@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 namespace ProfidLauncher
 {
@@ -20,6 +21,13 @@ namespace ProfidLauncher
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+            e.Cancel = true;
+            return;
         }
     }
 }

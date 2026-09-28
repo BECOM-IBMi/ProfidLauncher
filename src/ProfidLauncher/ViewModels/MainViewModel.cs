@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using ProfidLauncher.Services;
 using System;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Media;
 
 namespace ProfidLauncher.ViewModels;
@@ -15,6 +14,7 @@ public partial class MainViewModel : ObservableObject
     private readonly ProfidAppService _profidService;
     private readonly Admin _adminPage;
     private readonly ShortcutService _shortcutService;
+    private readonly Info _infoPage;
 
     [ObservableProperty]
     private string profidUrl = "";
@@ -25,12 +25,14 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ImageSource windowIcon = default!;
 
-    public MainViewModel(ILogger<MainViewModel> logger, ProfidAppService profidService, Admin adminPage, ShortcutService shortcutService)
+
+    public MainViewModel(ILogger<MainViewModel> logger, ProfidAppService profidService, Admin adminPage, ShortcutService shortcutService, Info infoPage)
     {
         _logger = logger;
         _profidService = profidService;
         _adminPage = adminPage;
         _shortcutService = shortcutService;
+        _infoPage = infoPage;
     }
 
     [RelayCommand]
@@ -66,12 +68,13 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ShowInfo()
     {
-        var info = new Info(_profidService.Version)
-        {
-            Owner = Application.Current.MainWindow
-        };
+        //var info = new Info(_profidService.Version)
+        //{
+        //    Owner = Application.Current.MainWindow
+        //};
 
-        info.ShowDialog();
+        //info.ShowDialog();
+        _infoPage.ShowDialog();
     }
 
     [RelayCommand]
